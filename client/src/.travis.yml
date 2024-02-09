@@ -1,0 +1,17 @@
+language: generic
+sudo: required
+services:
+  - docker
+
+before_install: 
+  - docker build -t wilbax/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true wilbax/react-test npm test
+
+after_success: 
+  - docker build -t wilbax/multi-client ./client
+  - docker build -t wilbax/multi-nginx ./nginx
+  - docker build -t wilbax/multi-server ./server
+  - docker build -t wilbax/multi-worker ./worker
+
