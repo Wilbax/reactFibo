@@ -14,4 +14,10 @@ after_success:
   - docker build -t wilbax/multi-nginx ./nginx
   - docker build -t wilbax/multi-server ./server
   - docker build -t wilbax/multi-worker ./worker
+  
+  - docker echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push wilbax/multi-client
+  - docker push wilbax/multi-nginx
+  - docker push wilbax/multi-server
+  - docker push wilbax/multi-worker
 
